@@ -5,6 +5,16 @@ import os
 
 def solve_a(input_data):
     solution = 0
+    a_list = []
+    b_list = []
+    for line in input_data.splitlines():
+        a, b = line.split('   ')
+        a_list.append(int(a))
+        b_list.append(int(b))
+    a_list.sort()
+    b_list.sort()
+    for i in range(len(a_list)):
+        solution += abs(a_list[i] - b_list[i])
 
 
 
@@ -15,7 +25,15 @@ def solve_a(input_data):
 def solve_b(input_data):
     solution = 0
 
-
+    a_list = []
+    b_list = []
+    for line in input_data.splitlines():
+        a, b = line.split('   ')
+        a_list.append(int(a))
+        b_list.append(int(b))
+    for a in a_list:
+        num = b_list.count(a)
+        solution += num * a
 
 
     return solution
@@ -26,6 +44,7 @@ def solve_b(input_data):
 
 year, day = [ int(param.strip(".py")) for param in os.path.abspath(__file__).split('\\')[-2:]]
 puzzle = Puzzle(year=year, day=day)
+
 examples = puzzle._get_examples()
 for example in examples:
     if not puzzle.answered_a and example.answer_a:
