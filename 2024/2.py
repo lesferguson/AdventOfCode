@@ -6,7 +6,18 @@ import os
 def solve_a(input_data):
     solution = 0
 
-
+    for line in input_data.splitlines():
+        reports = [int(a) for a in line.split(' ')]
+        if sorted(reports) == reports or sorted(reports, reverse=True) == reports:
+            gradual=True
+            for i in range(len(reports)-1):
+                if 1 <= abs(reports[i] - reports[i+1]) <= 3:
+                    continue
+                else:
+                    gradual=False
+                    break
+            if gradual:
+                solution+=1
 
 
     return solution
@@ -14,9 +25,56 @@ def solve_a(input_data):
 
 def solve_b(input_data):
     solution = 0
-
-
-
+    # for line in input_data.splitlines():
+    #     reports = [int(a) for a in line.split(' ')]
+    #     popped=False
+    #     n = 0
+    #     ascending = True
+    #     for i in range(len(reports) - 1):
+    #         if 1 <= abs(reports[i] - reports[i + 1]) <= 3:
+    #             n = n+1
+    #             continue
+    #         else:
+    #             if popped:
+    #                 gradual = False
+    #                 break
+    #             else:
+    #                 popped = True
+    #                 n = n+2
+    #     if gradual:
+    #         solution += 1
+    unsafe_reports = []
+    for line in input_data.splitlines():
+        reports = [int(a) for a in line.split(' ')]
+        if sorted(reports) == reports or sorted(reports, reverse=True) == reports:
+            gradual=True
+            for i in range(len(reports)-1):
+                if 1 <= abs(reports[i] - reports[i+1]) <= 3:
+                    continue
+                else:
+                    gradual=False
+                    unsafe_reports.append(reports)
+                    break
+            if gradual:
+                solution+=1
+        else:
+            unsafe_reports.append(reports)
+    for unsafe_report in unsafe_reports:
+        for i in range(len(unsafe_report)):
+            reports = unsafe_report.copy()
+            del reports[i]
+            if sorted(reports) == reports or sorted(reports, reverse=True) == reports:
+                gradual = True
+                for i in range(len(reports) - 1):
+                    if 1 <= abs(reports[i] - reports[i + 1]) <= 3:
+                        continue
+                    else:
+                        gradual = False
+                        break
+                if gradual:
+                    print(reports)
+                    solution += 1
+                    break
 
     return solution
 
