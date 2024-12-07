@@ -7,7 +7,6 @@ from utils.decorators import *
 
 @timer_func
 def solve_a(input_data):
-    solution = 0
     max_j = len(input_data.splitlines()) - 1
     max_i = len(input_data.splitlines()[0]) - 1
 
@@ -95,9 +94,7 @@ def solve_b(input_data):
             )
             if next_step not in lab:
                 break
-
             elif lab[next_step] == ".":
-
                 guards_location = next_step
                 if (
                         guards_location in visited
@@ -140,7 +137,6 @@ for example in examples:
         print("example b answer: ", example.answer_b)
         sol = solve_b(example.input_data)
         print("solution b answer: ", sol)
-        # print(example.extra)
         assert str(sol) == example.answer_b
         print("Example Passed")
 if not puzzle.answered_a:

@@ -36,7 +36,6 @@ def solve_a(input_data):
     for line in input_data.splitlines():
         test_value, operands = line.split(": ")
         operands = [int(operand) for operand in operands.split(" ")]
-
         try:
             next_operation(operands[0], operands[1:].copy(), int(test_value))
         except ValueError:
@@ -51,7 +50,6 @@ def solve_b(input_data):
     for line in input_data.splitlines():
         test_value, operands = line.split(": ")
         operands = [int(operand) for operand in operands.split(" ")]
-        total = None
         try:
             next_operation(operands[0], operands[1:].copy(), int(test_value))
         except ValueError:
