@@ -1,0 +1,77 @@
+from aocd import data, submit
+from aocd.models import Puzzle
+import os
+
+positions = 0
+
+
+def next_operation(current, remaining_operands, target):
+    global positions
+    if current > target:
+        return
+    if not remaining_operands and current == target:
+        positions += target
+        raise ValueError
+    elif not remaining_operands:
+        return
+    else:
+        next_operation(current + remaining_operands[0], remaining_operands[1:].copy(), target)
+        next_operation(current * remaining_operands[0], remaining_operands[1:].copy(), target)
+        next_operation(int(str(current) + str(remaining_operands[0])), remaining_operands[1:].copy(), target)
+
+
+def solve_a(input_data):
+    global positions
+    for line in input_data.splitlines():
+        test_value, operands = line.split(": ")
+        operands = [int(operand) for operand in operands.split(" ")]
+
+        try:
+            next_operation(operands[0], operands[1:].copy(), int(test_value))
+        except ValueError:
+            continue
+
+    return positions
+
+
+def solve_b(input_data):
+    global positions
+    for line in input_data.splitlines():
+        test_value, operands = line.split(": ")
+        operands = [int(operand) for operand in operands.split(" ")]
+        total = None
+        try:
+            next_operation(operands[0], operands[1:].copy(), int(test_value))
+        except ValueError:
+            continue
+
+    return positions
+
+
+year, day = [int(param.strip(".py")) for param in os.path.abspath(__file__).split('\\')[-2:]]
+puzzle = Puzzle(year=year, day=day)
+examples = puzzle._get_examples()
+for example in examples:
+    if not puzzle.answered_a and example.answer_a:
+        print("-----------------")
+        print("input: ", example.input_data)
+        print("example a answer: ", example.answer_a)
+        sol = solve_a(example.input_data)
+        print("solution a answer: ", sol)
+        print(sol)
+        assert str(sol) == example.answer_a
+        print("Example Passed")
+    elif example.answer_b:
+        print("-----------------")
+        print("input: ", example.input_data)
+        print("example b answer: ", example.answer_b)
+        sol = solve_b(example.input_data)
+        print("solution b answer: ", sol)
+        # print(example.extra)
+        assert str(sol) == example.answer_b
+        print("Example Passed")
+positions = 0
+if not puzzle.answered_a:
+    submit(solve_a(data))
+else:
+    submit(solve_b(data))
