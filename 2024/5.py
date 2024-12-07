@@ -1,12 +1,13 @@
 from aocd import data, submit
 from aocd.models import Puzzle
 import os
+from utils.decorators import *
 
 
 def solve_a(input_data):
     solution = 0
 
-    page_order, manuals = input_data.split('\n\n')
+    page_order, manuals = input_data.split("\n\n")
     page_order = page_order.splitlines()
     manuals = manuals.splitlines()
 
@@ -20,10 +21,10 @@ def solve_a(input_data):
                 if manual.index(rule[0]) < manual.index(rule[1]):
                     continue
                 else:
-                    bad=True
+                    bad = True
                     break
         if not bad:
-            solution += manual[int((len(manual)-1)/2)]
+            solution += manual[int((len(manual) - 1) / 2)]
 
     return solution
 
@@ -31,7 +32,7 @@ def solve_a(input_data):
 def solve_b(input_data):
     solution = 0
 
-    page_order, manuals = input_data.split('\n\n')
+    page_order, manuals = input_data.split("\n\n")
     page_order = page_order.splitlines()
     manuals = manuals.splitlines()
 
@@ -55,12 +56,13 @@ def solve_b(input_data):
                     if manual.index(rule[0]) > manual.index(rule[1]):
                         manual.remove(rule[0])
                         manual.insert(manual.index(rule[1]), rule[0])
-        solution += manual[int((len(manual)-1)/2)]
+        solution += manual[int((len(manual) - 1) / 2)]
     return solution
 
 
-
-year, day = [ int(param.strip(".py")) for param in os.path.abspath(__file__).split('\\')[-2:]]
+year, day = [
+    int(param.strip(".py")) for param in os.path.abspath(__file__).split("\\")[-2:]
+]
 puzzle = Puzzle(year=year, day=day)
 examples = puzzle._get_examples()
 for example in examples:

@@ -1,62 +1,47 @@
 from aocd import data, submit
 from aocd.models import Puzzle
 import os
+from utils.decorators import *
 
 
+@timer_func
 def solve_a(input_data):
     solution = 0
 
     for line in input_data.splitlines():
-        reports = [int(a) for a in line.split(' ')]
+        reports = [int(a) for a in line.split(" ")]
         if sorted(reports) == reports or sorted(reports, reverse=True) == reports:
-            gradual=True
-            for i in range(len(reports)-1):
-                if 1 <= abs(reports[i] - reports[i+1]) <= 3:
+            gradual = True
+            for i in range(len(reports) - 1):
+                if 1 <= abs(reports[i] - reports[i + 1]) <= 3:
                     continue
                 else:
-                    gradual=False
+                    gradual = False
                     break
             if gradual:
-                solution+=1
-
+                solution += 1
 
     return solution
 
 
+@timer_func
 def solve_b(input_data):
     solution = 0
-    # for line in input_data.splitlines():
-    #     reports = [int(a) for a in line.split(' ')]
-    #     popped=False
-    #     n = 0
-    #     ascending = True
-    #     for i in range(len(reports) - 1):
-    #         if 1 <= abs(reports[i] - reports[i + 1]) <= 3:
-    #             n = n+1
-    #             continue
-    #         else:
-    #             if popped:
-    #                 gradual = False
-    #                 break
-    #             else:
-    #                 popped = True
-    #                 n = n+2
-    #     if gradual:
-    #         solution += 1
+
     unsafe_reports = []
     for line in input_data.splitlines():
-        reports = [int(a) for a in line.split(' ')]
+        reports = [int(a) for a in line.split(" ")]
         if sorted(reports) == reports or sorted(reports, reverse=True) == reports:
-            gradual=True
-            for i in range(len(reports)-1):
-                if 1 <= abs(reports[i] - reports[i+1]) <= 3:
+            gradual = True
+            for i in range(len(reports) - 1):
+                if 1 <= abs(reports[i] - reports[i + 1]) <= 3:
                     continue
                 else:
-                    gradual=False
+                    gradual = False
                     unsafe_reports.append(reports)
                     break
             if gradual:
-                solution+=1
+                solution += 1
         else:
             unsafe_reports.append(reports)
     for unsafe_report in unsafe_reports:
@@ -72,18 +57,22 @@ def solve_b(input_data):
                         gradual = False
                         break
                 if gradual:
-                    print(reports)
+
                     solution += 1
                     break
 
     return solution
 
 
-
-
-
-year, day = [ int(param.strip(".py")) for param in os.path.abspath(__file__).split('\\')[-2:]]
+year, day = [
+    int(param.strip(".py")) for param in os.path.abspath(__file__).split("\\")[-2:]
+]
 puzzle = Puzzle(year=year, day=day)
+if puzzle.answered_b:
+    print(str(year) + " day " + str(day))
+    solve_a(data)
+    solve_b(data)
+    exit()
 examples = puzzle._get_examples()
 for example in examples:
     if not puzzle.answered_a and example.answer_a:

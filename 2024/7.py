@@ -4,6 +4,8 @@ import os
 
 positions = 0
 
+from utils.decorators import *
+
 
 def next_operation(current, remaining_operands, target):
     global positions
@@ -15,11 +17,20 @@ def next_operation(current, remaining_operands, target):
     elif not remaining_operands:
         return
     else:
-        next_operation(current + remaining_operands[0], remaining_operands[1:].copy(), target)
-        next_operation(current * remaining_operands[0], remaining_operands[1:].copy(), target)
-        next_operation(int(str(current) + str(remaining_operands[0])), remaining_operands[1:].copy(), target)
+        next_operation(
+            current + remaining_operands[0], remaining_operands[1:].copy(), target
+        )
+        next_operation(
+            current * remaining_operands[0], remaining_operands[1:].copy(), target
+        )
+        next_operation(
+            int(str(current) + str(remaining_operands[0])),
+            remaining_operands[1:].copy(),
+            target,
+        )
 
 
+@timer_func
 def solve_a(input_data):
     global positions
     for line in input_data.splitlines():
@@ -34,6 +45,7 @@ def solve_a(input_data):
     return positions
 
 
+@timer_func
 def solve_b(input_data):
     global positions
     for line in input_data.splitlines():
@@ -48,28 +60,32 @@ def solve_b(input_data):
     return positions
 
 
-year, day = [int(param.strip(".py")) for param in os.path.abspath(__file__).split('\\')[-2:]]
+year, day = [
+    int(param.strip(".py")) for param in os.path.abspath(__file__).split("\\")[-2:]
+]
 puzzle = Puzzle(year=year, day=day)
 examples = puzzle._get_examples()
-for example in examples:
-    if not puzzle.answered_a and example.answer_a:
-        print("-----------------")
-        print("input: ", example.input_data)
-        print("example a answer: ", example.answer_a)
-        sol = solve_a(example.input_data)
-        print("solution a answer: ", sol)
-        print(sol)
-        assert str(sol) == example.answer_a
-        print("Example Passed")
-    elif example.answer_b:
-        print("-----------------")
-        print("input: ", example.input_data)
-        print("example b answer: ", example.answer_b)
-        sol = solve_b(example.input_data)
-        print("solution b answer: ", sol)
-        # print(example.extra)
-        assert str(sol) == example.answer_b
-        print("Example Passed")
+skip_examples = False
+if not skip_examples:
+    for example in examples:
+        if not puzzle.answered_a and example.answer_a:
+            print("-----------------")
+            print("input: ", example.input_data)
+            print("expected answer (A): ", example.answer_a)
+            sol = solve_a(example.input_data)
+            print("actual answer (A): ", sol)
+            print(sol)
+            assert str(sol) == example.answer_a
+            print("Example Passed")
+        elif example.answer_b:
+            print("-----------------")
+            print("input: ", example.input_data)
+            print("expected answer (B): ", example.answer_b)
+            sol = solve_b(example.input_data)
+            print("actual answer (B): ", sol)
+            # print(example.extra)
+            assert str(sol) == example.answer_b
+            print("Example Passed")
 positions = 0
 if not puzzle.answered_a:
     submit(solve_a(data))
