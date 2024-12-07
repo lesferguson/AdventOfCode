@@ -68,11 +68,12 @@ year, day = [
     int(param.strip(".py")) for param in os.path.abspath(__file__).split("\\")[-2:]
 ]
 puzzle = Puzzle(year=year, day=day)
+
 if puzzle.answered_b:
-    print(str(year) + " day " + str(day))
     solve_a(data)
     solve_b(data)
     exit()
+
 examples = puzzle._get_examples()
 for example in examples:
     if not puzzle.answered_a and example.answer_a:

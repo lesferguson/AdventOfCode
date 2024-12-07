@@ -44,7 +44,6 @@ year, day = [
 puzzle = Puzzle(year=year, day=day)
 
 if puzzle.answered_b:
-    print(str(year) + " day " + str(day))
     solve_a(data)
     solve_b(data)
     exit()

@@ -4,6 +4,7 @@ import os
 from utils.decorators import *
 
 
+@timer_func
 def solve_a(input_data):
     solution = 0
 
@@ -29,6 +30,7 @@ def solve_a(input_data):
     return solution
 
 
+@timer_func
 def solve_b(input_data):
     solution = 0
 
@@ -64,6 +66,13 @@ year, day = [
     int(param.strip(".py")) for param in os.path.abspath(__file__).split("\\")[-2:]
 ]
 puzzle = Puzzle(year=year, day=day)
+
+if puzzle.answered_b:
+    solve_a(data)
+    solve_b(data)
+    exit()
+
+
 examples = puzzle._get_examples()
 for example in examples:
     if not puzzle.answered_a and example.answer_a:
