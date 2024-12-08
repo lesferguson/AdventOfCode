@@ -35,7 +35,7 @@ def solve_a(input_data):
         else:
             guards_direction = direction_order[
                 (direction_order.index(guards_direction) + 1) % len(direction_order)
-                ]
+            ]
 
     return len(visited)
 
@@ -54,6 +54,8 @@ def solve_b(input_data):
     guards_location = list(lab.keys())[list(lab.values()).index("^")]
     guards_start = guards_location
     visited = defaultdict(str, {guards_location: "N"})
+    visited_list = [guards_start]
+    visited_list_dirs = ["N"]
     guards_direction = "N"
     directions = {"N": (0, -1), "E": (1, 0), "S": (0, 1), "W": (-1, 0)}
     direction_order = ["N", "E", "S", "W"]
@@ -69,25 +71,27 @@ def solve_b(input_data):
         elif lab[next_step] == ".":
             guards_location = next_step
             visited[guards_location] = guards_direction
+            visited_list.append(guards_location)
+            visited_list_dirs.append(guards_direction)
         else:
             guards_direction = direction_order[
                 (direction_order.index(guards_direction) + 1) % len(direction_order)
-                ]
+            ]
 
-    orig_path = visited.copy()
     orig_lab = lab.copy()
-    for node in orig_path:
+    for i, node in enumerate(visited_list):
         if node == guards_start:
             continue
 
         lab = orig_lab.copy()
         lab[node] = "#"
-        guards_location = guards_start
-        visited = defaultdict(str, {guards_location: "N"})
-        guards_direction = "N"
+        guards_location = visited_list[i - 1]
+        visited = defaultdict(
+            str, {visited_list[n]: visited_list_dirs[n] for n in range(i)}
+        )
+        guards_direction = visited_list_dirs[i - 1]
 
         while 0 <= guards_location[0] <= max_i and 0 <= guards_location[1] <= max_j:
-
             next_step = (
                 guards_location[0] + directions[guards_direction][0],
                 guards_location[1] + directions[guards_direction][1],
@@ -106,7 +110,7 @@ def solve_b(input_data):
             else:
                 guards_direction = direction_order[
                     (direction_order.index(guards_direction) + 1) % len(direction_order)
-                    ]
+                ]
     return solution
 
 
