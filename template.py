@@ -62,10 +62,19 @@ if not skip_examples:
             else:
                 example_solution = example.answer_b
             print("-----------------")
-            print("input: ", example.input_data)
+            print("input: ", example_input)
             print("expected answer (B): ", example_solution)
-            sol = part_2(example.input_data)
+            sol = part_2(example_input)
             print("actual answer (B): ", sol)
+            assert str(sol) == example_solution
+            print("Example Passed")
+        elif override_example_solution and override_example_input:
+            example_solution = override_example_solution
+            print("-----------------")
+            print("input: ", example_input)
+            print("expected answer (override): ", example_solution)
+            sol = part_2(example_input)
+            print("actual answer (override): ", sol)
             assert str(sol) == example_solution
             print("Example Passed")
 

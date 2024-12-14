@@ -1,31 +1,50 @@
 2024
 -----
 day1
-part_1 - 0.0006s
-part_2 - 0.0067s
+part_1 - 0.0004s
+part_2 - 0.0052s
 
 day2
-part_1 - 0.0011s
-part_2 - 0.0025s
+part_1 - 0.0010s
+part_2 - 0.0022s
 
 day3
 part_1 - 0.0004s
-part_2 - 0.0006s
+part_2 - 0.0004s
 
 day4
-part_1 - 0.0147s
-part_2 - 0.0145s
+part_1 - 0.0165s
+part_2 - 0.0136s
 
 day5
-part_1 - 0.0340s
-part_2 - 0.1057s
+part_1 - 0.0375s
+part_2 - 0.1117s
 
 day6
-part_1 - 0.0049s
-part_2 - 2.1255s
+part_1 - 0.0055s
+part_2 - 2.3157s
 
 day7
-part_1 - 1.2072s
-part_2 - 1.1520s
+part_1 - 1.0847s
+part_2 - 1.0818s
 
 day8
+part_1 - 0.0018s
+part_2 - 0.0020s
+
+day9
+part_1 - 0.0151s
+part_2 - 3.1164s
+
+day10
+part_1 - 0.0053s
+part_2 - 0.0051s
+
+day11
+part_1 - 0.0776s
+part_2 - 0.0597s
+
+day12
+part_1 - 1.5087s
+part_2 - 1.6661s
+
