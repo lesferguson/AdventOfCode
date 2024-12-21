@@ -7,6 +7,12 @@ skip_examples = False
 override_example_input = None
 override_example_solution = None
 
+def parse_input(raw_input):
+    formatted_input = None
+
+
+    return formatted_input
+
 
 @timer_func
 def part_1(input_data):
@@ -32,12 +38,11 @@ year, day = [
 puzzle = Puzzle(year=year, day=day)
 
 if puzzle.answered_b:
-    part_1(data)
-    part_2(data)
+    part_1(parse_input(data))
+    part_2(parse_input(data))
     exit()
 
 examples = puzzle._get_examples()
-
 if not skip_examples:
     for example in examples:
         if override_example_input:
@@ -52,7 +57,7 @@ if not skip_examples:
             print("-----------------")
             print("input: ", example_input)
             print("expected answer (A): ", example_solution)
-            sol = part_1(example_input)
+            sol = part_1(parse_input(example_input))
             print("actual answer (A): ", sol)
             assert str(sol) == example_solution
             print("Example Passed")
@@ -64,7 +69,7 @@ if not skip_examples:
             print("-----------------")
             print("input: ", example_input)
             print("expected answer (B): ", example_solution)
-            sol = part_2(example_input)
+            sol = part_2(parse_input(example_input))
             print("actual answer (B): ", sol)
             assert str(sol) == example_solution
             print("Example Passed")
@@ -73,12 +78,14 @@ if not skip_examples:
             print("-----------------")
             print("input: ", example_input)
             print("expected answer (override): ", example_solution)
-            sol = part_2(example_input)
+            if not puzzle.answered_a:
+                sol = part_1(parse_input(example_input))
+            else:
+                sol = part_2(parse_input(example_input))
             print("actual answer (override): ", sol)
             assert str(sol) == example_solution
             print("Example Passed")
-
 if not puzzle.answered_a:
-    submit(part_1(data))
+    submit(part_1(parse_input(data)))
 else:
-    submit(part_2(data))
+    submit(part_2(parse_input(data)))
