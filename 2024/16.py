@@ -3,10 +3,30 @@ from aocd.models import Puzzle
 import os
 from utils.decorators import *
 from utils.input_reader import default_parsers
+import sys
+from collections import defaultdict
 
+sys.setrecursionlimit(1500)
 skip_examples = False
-override_example_input = None
-override_example_solution = None
+override_example_input = """#################
+#...#...#...#..E#
+#.#.#.#.#.#.#.#.#
+#.#.#.#...#...#.#
+#.#.#.#.###.#.#.#
+#...#.#.#.....#.#
+#.#.#.#.#.#####.#
+#.#...#.#.#.....#
+#.#.#####.#.###.#
+#.#.#.......#...#
+#.#.###.#####.###
+#.#.#...#.....#.#
+#.#.#.#####.###.#
+#.#.#.........#.#
+#.#.#.#########.#
+#S#.............#
+#################"""
+override_example_solution = "64"
+
 
 def parse_input(raw_input):
     """
@@ -18,29 +38,78 @@ def parse_input(raw_input):
         list: comma seperated list per line, if only 1 line, only return the list for that line
         grid: return a dictionary of coordinate keys, with the value of that coord in the values
         """
-    formatted_input = default_parsers(raw_input, "raw", str)
-
+    formatted_input = default_parsers(raw_input, "grid", str)
 
     return formatted_input
 
+
+min_score = 100000
+min_distances = defaultdict(lambda: 100000)
+best_path_tiles = defaultdict(dict)
+
+
+def path_find(previous_node, current_node, current_score, end_node, visited, grid):
+    global min_score
+    for node in [(modifier[0] + current_node[0], modifier[1] + current_node[1]) for modifier in
+                 [(0, 1), (0, -1), (1, 0), (-1, 0)]]:
+
+        if node == end_node and current_score <= min_score:
+            min_score = current_score
+            for tile in visited:
+                best_path_tiles[min_score][tile] = True
+            return
+        elif node == end_node:
+
+            return
+
+        if node == previous_node or grid[node] == "#" or node in visited:
+            continue
+        elif node == (
+                current_node[0] + (current_node[0] - previous_node[0]),
+                current_node[1] + (current_node[1] - previous_node[1])):
+            next_score = 1
+        else:
+            next_score = 1001
+
+        if current_score + next_score > min_distances[node] + 1001 or current_score + next_score > min_score:
+            continue
+        else:
+            min_distances[node] = current_score + next_score
+
+        visited[node] = True
+        try:
+            path_find(current_node, node, current_score + next_score, end_node, visited, grid)
+        except RecursionError:
+            pass
+        del visited[node]
+    return
 
 
 @timer_func
 def part_1(input_data):
     solution = 0
+    global min_score
     #
+    start_point = [coord for coord, val in input_data.items() if val == "S"][0]
+    end_point = [coord for coord, val in input_data.items() if val == "E"][0]
+    path_find((start_point[0] - 1, start_point[1]), start_point, 1, end_point, {start_point: True}, input_data)
 
     #
-    return solution
+    return min_score
 
 
 @timer_func
 def part_2(input_data):
     solution = 0
     #
-
+    global best_path_tiles
+    global min_score
     #
-    return solution
+    start_point = [coord for coord, val in input_data.items() if val == "S"][0]
+    end_point = [coord for coord, val in input_data.items() if val == "E"][0]
+    path_find((start_point[0] - 1, start_point[1]), start_point, 1, end_point, {start_point: True}, input_data)
+    #
+    return len(best_path_tiles[min_score]) + 1
 
 
 year, day = [
@@ -96,6 +165,10 @@ if not skip_examples:
             print("actual answer (override): ", sol)
             assert str(sol) == example_solution
             print("Example Passed")
+
+min_score = 99999999999
+min_distances = defaultdict(lambda: 99999999)
+best_path_tiles = defaultdict(dict)
 if not puzzle.answered_a:
     submit(part_1(parse_input(data)))
 else:

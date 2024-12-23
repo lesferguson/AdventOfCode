@@ -2,11 +2,11 @@
 -----
 day1
 part_1 - 0.0004s
-part_2 - 0.0051s
+part_2 - 0.0055s
 
 day2
-part_1 - 0.0011s
-part_2 - 0.0024s
+part_1 - 0.0010s
+part_2 - 0.0023s
 
 day3
 part_1 - 0.0004s
@@ -14,49 +14,53 @@ part_2 - 0.0003s
 
 day4
 part_1 - 0.0154s
-part_2 - 0.0135s
+part_2 - 0.0154s
 
 day5
-part_1 - 0.0373s
-part_2 - 0.1086s
+part_1 - 0.0386s
+part_2 - 0.1065s
 
 day6
 part_1 - 0.0044s
-part_2 - 2.0994s
+part_2 - 2.5196s
 
 day7
-part_1 - 1.0587s
-part_2 - 1.0576s
+part_1 - 1.0528s
+part_2 - 1.0539s
 
 day8
-part_1 - 0.0018s
-part_2 - 0.0021s
+part_1 - 0.0016s
+part_2 - 0.0020s
 
 day9
-part_1 - 0.0153s
-part_2 - 2.9855s
+part_1 - 0.0140s
+part_2 - 3.0012s
 
 day10
-part_1 - 0.0051s
-part_2 - 0.0046s
+part_1 - 0.0052s
+part_2 - 0.0056s
 
 day11
-part_1 - 0.0776s
-part_2 - 0.0570s
+part_1 - 0.0740s
+part_2 - 0.0594s
 
 day12
-part_1 - 1.4098s
-part_2 - 1.5629s
+part_1 - 1.5194s
+part_2 - 1.5769s
 
 day13
-part_1 - 0.0125s
-part_2 - 0.0052s
+part_1 - 0.0056s
+part_2 - 0.0071s
 
 day14
-part_1 - 0.2144s
-part_2 - 22.0421s
+part_1 - 0.2157s
+part_2 - 22.2941s
 
 day15
-part_1 - 0.0075s
-part_2 - 0.0188s
+part_1 - 0.0078s
+part_2 - 0.0195s
+
+day16
+part_1 - 41.8740s
+part_2 - 1.1641s
 
