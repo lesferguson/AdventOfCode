@@ -20,10 +20,10 @@ def parse_input(raw_input):
         list: comma seperated list per line, if only 1 line, only return the list for that line
         grid: return a dictionary of coordinate keys, with the value of that coord in the values
         """
-    formatted_input = default_parsers(raw_input, "raw", str)
+    formatted_input = default_parsers(raw_input, "line", str)
 
 
-    return formatted_input
+    return [[int(battery) for battery in bank] for bank in formatted_input]
 
 
 
@@ -31,17 +31,39 @@ def parse_input(raw_input):
 def part_1(input_data):
     solution = 0
     #
+    for bank in input_data:
+        max_joltage = 1
+        i = 0
+        j = 1
+        while j <= len(bank)-2:
+            if bank[i] < bank[j]:
+                i = j
+                max_joltage = i+1
+            elif bank[j] > bank[max_joltage]:
+                max_joltage=j
+            j += 1
+        if j == len(bank)-1 and bank[max_joltage] < bank[j]:
+            max_joltage=j
+        solution += bank[i]*10 + bank[max_joltage]
 
     #
     return solution
-
 
 @timer_func
 def part_2(input_data):
     solution = 0
     #
-
-    #
+    for bank in input_data:
+        max_joltage=[]
+        for battery in range(-12,0):
+            if battery < -1:
+                max_batt = max(bank[:battery+1])
+            else:
+                max_batt = max(bank)
+            bank = bank[bank.index(max_batt)+1:]
+            max_joltage.append(max_batt)
+        solution += int("".join([str(battery) for battery in max_joltage]))
+    # #
     return solution
 
 
